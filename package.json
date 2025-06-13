@@ -2,10 +2,14 @@
   "name": "@cookbook-ai/source",
   "version": "0.0.0",
   "license": "MIT",
+  "description": "cookbook that searches through your pdfs",
+  "author": "Thomas James Slater",
   "scripts": {
-    "postinstall": "electron-builder install-app-deps",
+    "postinstall": "electron-forge import",
     "build": "nx run-many --target=build --projects=frontend,backend,desktop",
-    "start": "nx run-many --target=serve --projects=frontend,backend,desktop"
+    "build:desktop": "nx build desktop",
+    "start": "nx run-many --target=serve --projects=frontend,backend,desktop",
+    "package": "yarn build && nx make desktop"
   },
   "private": true,
   "devDependencies": {
@@ -15,6 +19,9 @@
     "@angular/cli": "~20.0.0",
     "@angular/compiler-cli": "~20.0.0",
     "@angular/language-service": "~20.0.0",
+    "@electron-forge/cli": "^7.2.0",
+    "@electron-forge/maker-dmg": "^7.2.0",
+    "@electron-forge/maker-zip": "^7.2.0",
     "@eslint/js": "^9.8.0",
     "@nestjs/schematics": "^11.0.0",
     "@nestjs/testing": "^11.0.0",

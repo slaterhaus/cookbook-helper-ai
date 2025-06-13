@@ -38,9 +38,9 @@
       "options": {
         "name": "desktop",
         "frontendProject": "frontend",
-        "sourcePath": "dist/apps",
+        "sourcePath": "dist/",
         "outputPath": "dist/packages",
-        "prepackageOnly": true
+        "prepackageOnly": true,
       }
     },
     "make": {
@@ -48,7 +48,7 @@
       "options": {
         "name": "desktop",
         "frontendProject": "frontend",
-        "sourcePath": "dist/apps",
+        "sourcePath": "dist/",
         "outputPath": "dist/executables"
       }
     },

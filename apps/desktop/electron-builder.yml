@@ -1,0 +1,88 @@
+appId: com.yourcompany.cookbookai
+productName: CookbookAI
+executableName: cookbook-ai
+# Set to false to disable asar integrity checking
+# asarIntegrity: false - removed as it's not supported in electron-builder 25.1.8
+# Set to true to remove source code from the package
+removePackageScripts: true
+# Set to false to disable source code protection
+electronCompile: false
+# Set to false to disable node modules rebuilding
+npmRebuild: false
+# Set to false to disable code signing
+forceCodeSigning: false
+# Enable asar packaging (simplified from object to boolean as required by electron-builder 25.1.8)
+# Previous configuration had additional options that are not supported in this format:
+# - unpackDir: ["node_modules/electron", "node_modules/electron-builder"]
+# - compressionLevel: 1
+# - maxSize: 100000000
+asar: true
+# Files to unpack from asar archive
+asarUnpack:
+  - "node_modules/electron/**/*"
+  - "node_modules/electron-builder/**/*"
+files:
+  - "!**/.vscode/*"
+  - "!**/.idea/*"
+  - "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}"
+  - "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}"
+  - "!**/node_modules/*.d.ts"
+  - "!**/node_modules/.bin"
+  - "!**/*.{iml,o,hprof,orig,pyc,pyo,rbc,swp,csproj,sln,xproj}"
+  - "!.editorconfig"
+  - "!**/._*"
+  - "!**/{.DS_Store,.git,.hg,.svn,CVS,RCS,SCCS,.gitignore,.gitattributes}"
+  - "!**/{__pycache__,thumbs.db,.flowconfig,.idea,.vs,.nyc_output}"
+  - "!**/{appveyor.yml,.travis.yml,circle.yml}"
+  - "!**/{npm-debug.log,yarn.lock,.yarn-integrity,.yarn-metadata.json}"
+  - "!dist/executables/**/*"
+  - "!dist/packages/**/*"
+  - "dist/desktop/**/*"
+extraResources:
+  - from: ./dist/backend
+    to: ./backend
+  - from: ./dist/frontend/browser
+    to: ./frontend
+  # Add explicit patterns to ensure index.html is included
+  - from: ./dist/frontend/browser/index.html
+    to: ./frontend/index.html
+  # Add more explicit patterns for frontend files
+  - from: ./dist/frontend/browser/**/*
+    to: ./frontend
+directories:
+  output: dist/executables
+  # Clean the output directory before building
+  buildResources: build
+  # Don't include the app in the resources path
+  app: "."
+mac:
+  target:
+    - dmg
+  category: public.app-category.utilities
+  darkModeSupport: true
+  hardenedRuntime: true
+  gatekeeperAssess: false
+  entitlements: null
+  entitlementsInherit: null
+  electronLanguages: ["en"]
+  # Exclude large files from the package
+  extraDistFiles: []
+  # Use a lower compression level for the DMG
+  compression: "store"
+dmg:
+  format: UDZO
+  artifactName: CookbookAI-${version}.dmg
+  icon: null
+  background: null
+  # Set to true to ensure the DMG is overwritten if it already exists
+#  overwrite: true
+  # Set a lower compression level for the DMG
+  # 0 = no compression, 9 = maximum compression
+#  compression: 5
+  contents:
+    - x: 130
+      y: 220
+    - x: 410
+      y: 220
+      type: link
+      path: /Applications
